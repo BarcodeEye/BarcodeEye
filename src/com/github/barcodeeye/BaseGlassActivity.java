@@ -3,6 +3,7 @@ package com.github.barcodeeye;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import com.google.android.glass.touchpad.Gesture;
@@ -12,6 +13,7 @@ import com.google.android.glass.touchpad.GestureDetector.ScrollListener;
 
 public class BaseGlassActivity extends Activity implements FingerListener, ScrollListener {
 
+    private static final String TAG = BaseGlassActivity.class.getSimpleName();
     private GestureDetector mGestureDetector;
 
     @Override
@@ -64,12 +66,16 @@ public class BaseGlassActivity extends Activity implements FingerListener, Scrol
             @Override
             public boolean onGesture(Gesture gesture) {
                 if (gesture == Gesture.TAP) {
+                    Log.v(TAG, "onSwipeTap");
                     return onTap();
                 } else if (gesture == Gesture.TWO_TAP) {
+                    Log.v(TAG, "onSwipeTwoTap");
                     return onTwoTap();
                 } else if (gesture == Gesture.SWIPE_RIGHT) {
+                    Log.v(TAG, "onSwipeRight");
                     return onSwipeRight();
                 } else if (gesture == Gesture.SWIPE_LEFT) {
+                    Log.v(TAG, "onSwipeLeft");
                     return onSwipeLeft();
                 }
                 return false;

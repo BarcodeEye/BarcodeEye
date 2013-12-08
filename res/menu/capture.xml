@@ -16,17 +16,4 @@
 -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <item
-        android:id="@+id/menu_settings"
-        android:icon="@android:drawable/ic_menu_preferences"
-        android:menuCategory="system"
-        android:showAsAction="withText"
-        android:title="@string/menu_settings"/>
-    <item
-        android:id="@+id/menu_help"
-        android:icon="@android:drawable/ic_menu_help"
-        android:menuCategory="system"
-        android:showAsAction="withText"
-        android:title="@string/menu_help"/>
-
 </menu>
