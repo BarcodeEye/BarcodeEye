@@ -325,17 +325,18 @@ public final class CaptureActivity extends BaseGlassActivity implements
             }
 
             decodeOrStoreSavedBitmap(null, null);
-        } catch (IOException ioe) {
-            Log.w(TAG, ioe);
+        } catch (IOException e) {
+            Log.w(TAG, e);
             displayFrameworkBugMessageAndExit();
-        } catch (RuntimeException e) {
-            // Barcode Scanner has seen crashes in the wild of this variety:
-            // java.?lang.?RuntimeException: Fail to connect to camera service
-            Log.w(TAG, "Unexpected error initializing camera", e);
+        } catch (InterruptedException e) {
+            Log.w(TAG, e);
             displayFrameworkBugMessageAndExit();
         }
     }
 
+    /**
+     * FIXME: This should be a glass compatible view (Card)
+     */
     private void displayFrameworkBugMessageAndExit() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getString(R.string.app_name));
