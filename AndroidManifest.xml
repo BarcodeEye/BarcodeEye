@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.github.barcodeeye"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionCode="0001000"
+    android:versionName="0.1" >
 
     <uses-sdk
         android:minSdkVersion="15"
@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -27,7 +28,7 @@
                 android:resource="@xml/voice_trigger_scan" />
         </activity>
         <activity
-            android:name="com.github.barcodeeye.migrated.CaptureActivity"
+            android:name="com.github.barcodeeye.scan.CaptureActivity"
             android:clearTaskOnLaunch="true"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="landscape"
@@ -36,17 +37,13 @@
             android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>
         <activity
-            android:name="com.google.zxing.client.android.PreferencesActivity"
-            android:label="@string/preferences_name"
-            android:stateNotNeeded="true" >
-        </activity>
-        <activity
-            android:name="com.google.zxing.client.android.HelpActivity"
-            android:screenOrientation="user" >
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
+            android:name="com.github.barcodeeye.scan.ResultsActivity"
+            android:clearTaskOnLaunch="true"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape"
+            android:stateNotNeeded="true"
+            android:theme="@style/CaptureTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>
     </application>
 

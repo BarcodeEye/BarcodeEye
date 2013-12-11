@@ -6,7 +6,7 @@ import android.os.Handler;
 import android.util.Log;
 
 import com.github.barcodeeye.R;
-import com.github.barcodeeye.migrated.CaptureActivity;
+import com.github.barcodeeye.scan.CaptureActivity;
 
 public class LaunchActivity extends Activity {
 
