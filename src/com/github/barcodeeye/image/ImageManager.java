@@ -46,6 +46,6 @@ public class ImageManager {
     }
 
     public Uri getImageUri(String name) {
-        return Uri.parse(getImageAbsolutePath(name));
+        return Uri.fromFile(new File(getImageAbsolutePath(name)));
     }
 }
