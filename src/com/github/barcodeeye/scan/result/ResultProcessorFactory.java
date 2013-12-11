@@ -12,7 +12,6 @@ import com.google.zxing.client.result.ISBNParsedResult;
 import com.google.zxing.client.result.ParsedResult;
 import com.google.zxing.client.result.ProductParsedResult;
 import com.google.zxing.client.result.ResultParser;
-import com.google.zxing.client.result.TextParsedResult;
 import com.google.zxing.client.result.URIParsedResult;
 
 public final class ResultProcessorFactory {
@@ -41,8 +40,7 @@ public final class ResultProcessorFactory {
             case WIFI:
                 // currently unsupported so we let them fall through
             default:
-                return new TextResultProcessor(context,
-                        (TextParsedResult) parsedResult, result, photoUri);
+                return new TextResultProcessor(context, parsedResult, result, photoUri);
         }
     }
 }

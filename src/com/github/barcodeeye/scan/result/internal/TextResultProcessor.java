@@ -1,25 +1,24 @@
 package com.github.barcodeeye.scan.result.internal;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.util.Log;
 
 import com.github.barcodeeye.scan.api.CardPresenter;
 import com.github.barcodeeye.scan.result.ResultProcessor;
 import com.google.zxing.Result;
-import com.google.zxing.client.result.TextParsedResult;
+import com.google.zxing.client.result.ParsedResult;
 
-public class TextResultProcessor extends ResultProcessor<TextParsedResult> {
+public class TextResultProcessor extends ResultProcessor<ParsedResult> {
 
     private static final String TAG = TextResultProcessor.class.getSimpleName();
 
-    public TextResultProcessor(Context context, TextParsedResult parsedResult,
+    private static final String SEARCH_URL = "https://www.google.com/search?q=%s";
+
+    public TextResultProcessor(Context context, ParsedResult parsedResult,
             Result result, Uri photoUri) {
         super(context, parsedResult, result, photoUri);
     }
@@ -28,24 +27,17 @@ public class TextResultProcessor extends ResultProcessor<TextParsedResult> {
     public List<CardPresenter> getCardResults() {
         List<CardPresenter> cardPresenters = new ArrayList<CardPresenter>();
 
-        TextParsedResult parsedResult = getParsedResult();
-        String text = parsedResult.getText();
-        try {
-            Uri uri = Uri.parse("http://www.google.com/#q="
-                    + URLEncoder.encode(text, "UTF-8"));
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        ParsedResult parsedResult = getParsedResult();
+        String codeValue = parsedResult.getDisplayResult();
 
-            CardPresenter cardPresenter = new CardPresenter();
-            cardPresenter.setText(text).setFooter("Serch Web");
-            cardPresenter.setPendingIntent(createPendingIntent(getContext(),
-                    intent));
-            cardPresenter.addImage(getPhotoUri());
+        CardPresenter cardPresenter = new CardPresenter();
+        cardPresenter.setText("Search Web").setFooter(codeValue);
 
-            cardPresenters.add(cardPresenter);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(String.format(SEARCH_URL, codeValue)));
+        cardPresenter.setPendingIntent(createPendingIntent(getContext(), intent));
 
-        } catch (UnsupportedEncodingException e) {
-            Log.e(TAG, e.getMessage(), e);
-        }
+        cardPresenters.add(cardPresenter);
 
         return cardPresenters;
     }

@@ -3,7 +3,6 @@ package com.github.barcodeeye.scan.result.internal;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -32,10 +31,7 @@ public class UriResultProcessor extends ResultProcessor<URIParsedResult> {
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(parsedResult.getURI()));
-        PendingIntent pendingIntent = PendingIntent.getActivity(
-                getContext(), 0, intent, 0);
-
-        cardPresenter.setPendingIntent(pendingIntent);
+        cardPresenter.setPendingIntent(createPendingIntent(getContext(), intent));
 
         cardResults.add(cardPresenter);
 

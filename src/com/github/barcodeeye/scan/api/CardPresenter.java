@@ -87,13 +87,13 @@ public class CardPresenter implements Parcelable {
         for (Uri uri : mImages) {
             if (uri != null) {
                 Log.w(TAG, "ImageUri: " + uri.toString());
-                // FIXME: Currently unsupported.
-                // see (https://code.google.com/p/google-glass-api/issues/detail?id=288)
-                // card.addImage(uri);
+                 card.addImage(uri);
             } else {
                 Log.w(TAG, "We got a null imageUri!");
             }
         }
+
+//        ImitationCard card = new ImitationCard(context);
         return card.toView();
     }
 

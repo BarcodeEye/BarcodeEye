@@ -20,7 +20,6 @@ import android.widget.AdapterView.OnItemClickListener;
 
 import com.github.barcodeeye.image.ImageManager;
 import com.github.barcodeeye.scan.api.CardPresenter;
-import com.google.android.glass.app.Card;
 import com.google.android.glass.widget.CardScrollAdapter;
 import com.google.android.glass.widget.CardScrollView;
 
@@ -31,7 +30,6 @@ public class ResultsActivity extends Activity {
     private static final String EXTRA_IMAGE_URI = "EXTRA_IMAGE_URI";
 
     private final List<CardPresenter> mCardPresenters = new ArrayList<CardPresenter>();
-    private final List<Card> mCards = new ArrayList<Card>();
     private CardScrollView mCardScrollView;
     private Bitmap mImage;
 
@@ -68,25 +66,6 @@ public class ResultsActivity extends Activity {
             finish();
             return;
         }
-
-    for (CardPresenter cardPresenter : mCardPresenters) {
-        Card card = new Card(this);
-        card.setText(cardPresenter.getText());
-        card.setInfo(cardPresenter.getFooter());
-
-        for (Uri uri : cardPresenter.getImages()) {
-            if (uri != null) {
-                Log.w(TAG, "ImageUri: " + uri.toString());
-                // FIXME: Currently unsupported.
-                // see (https://code.google.com/p/google-glass-api/issues/detail?id=288)
-                // card.addImage(uri);
-            } else {
-                Log.w(TAG, "We got a null imageUri!");
-            }
-        }
-
-        mCards.add(card);
-    }
 
         mCardScrollView = new CardScrollView(this);
         mCardScrollView.setAdapter(new CardScrollViewAdapter(this, mCardPresenters));
