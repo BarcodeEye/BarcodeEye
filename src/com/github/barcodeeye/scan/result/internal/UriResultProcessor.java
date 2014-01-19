@@ -10,27 +10,28 @@ import android.net.Uri;
 import com.github.barcodeeye.scan.api.CardPresenter;
 import com.github.barcodeeye.scan.result.ResultProcessor;
 import com.google.zxing.Result;
+import com.google.zxing.client.result.ParsedResult;
 import com.google.zxing.client.result.URIParsedResult;
 
-public class UriResultProcessor extends ResultProcessor<URIParsedResult> {
+public class UriResultProcessor extends ResultProcessor {
 
-    public UriResultProcessor(Context context, URIParsedResult parsedResult,
-            Result result, Uri photoUri) {
-        super(context, parsedResult, result, photoUri);
+    public UriResultProcessor(Context context, ParsedResult result,
+            Result rawResult/*, Uri photoUri*/) {
+        super(context, result, rawResult);//, photoUri);
     }
 
     @Override
     public List<CardPresenter> getCardResults() {
         List<CardPresenter> cardResults = new ArrayList<CardPresenter>();
 
-        URIParsedResult parsedResult = getParsedResult();
+        URIParsedResult result = (URIParsedResult) getResult();
 
         CardPresenter cardPresenter = new CardPresenter()
                 .setText("Open in Browser")
-                .setFooter(parsedResult.getDisplayResult());
+                .setFooter(result.getDisplayResult());
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(parsedResult.getURI()));
+        intent.setData(Uri.parse(result.getURI()));
         cardPresenter.setPendingIntent(createPendingIntent(getContext(), intent));
 
         cardResults.add(cardPresenter);

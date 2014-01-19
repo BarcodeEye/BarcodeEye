@@ -14,7 +14,7 @@ import com.google.zxing.Result;
 import com.google.zxing.client.result.ParsedResult;
 import com.google.zxing.client.result.ProductParsedResult;
 
-public class ProductResultProcessor extends ResultProcessor<ProductParsedResult> {
+public class ProductResultProcessor extends ResultProcessor {
 
     public static final HashMap<String, String> PRODUCT_SEARCH_ENDPOINTS = new HashMap<String, String>();
 
@@ -24,17 +24,17 @@ public class ProductResultProcessor extends ResultProcessor<ProductParsedResult>
         PRODUCT_SEARCH_ENDPOINTS.put("eBay", "http://www.ebay.com/sch/i.html?_nkw={CODE}");
     }
 
-    public ProductResultProcessor(Context context, ProductParsedResult parsedResult,
-            Result result, Uri photoUri) {
-        super(context, parsedResult, result, photoUri);
+    public ProductResultProcessor(Context context, ParsedResult result,
+            Result rawResult/*, Uri photoUri*/) {
+        super(context, result, rawResult);//, photoUri);
     }
 
     @Override
     public List<CardPresenter> getCardResults() {
         List<CardPresenter> cardPresenters = new ArrayList<CardPresenter>();
 
-        ParsedResult parsedResult = getParsedResult();
-        String codeValue = parsedResult.getDisplayResult();
+        ParsedResult result = getResult();
+        String codeValue = result.getDisplayResult();
 
         for (String key : PRODUCT_SEARCH_ENDPOINTS.keySet()) {
             CardPresenter cardPresenter = new CardPresenter();

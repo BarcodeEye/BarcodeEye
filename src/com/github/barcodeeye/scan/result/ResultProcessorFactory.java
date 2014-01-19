@@ -16,21 +16,18 @@ import com.google.zxing.client.result.URIParsedResult;
 
 public final class ResultProcessorFactory {
 
-    public static ResultProcessor<? extends ParsedResult> makeResultProcessor(
-            Context context, Result result, Uri photoUri) {
+    public static ResultProcessor makeResultProcessor(
+            Context context, Result rawResult/*, Uri photoUri*/) {
 
-        ParsedResult parsedResult = ResultParser.parseResult(result);
+        ParsedResult result = ResultParser.parseResult(rawResult);
 
-        switch (parsedResult.getType()) {
+        switch (result.getType()) {
             case PRODUCT:
-                return new ProductResultProcessor(context,
-                        (ProductParsedResult) parsedResult, result, photoUri);
+                return new ProductResultProcessor(context, result, rawResult);//, photoUri);
             case URI:
-                return new UriResultProcessor(context,
-                        (URIParsedResult) parsedResult, result, photoUri);
+                return new UriResultProcessor(context, result, rawResult);//, photoUri);
             case ISBN:
-                return new IsbnResultProcessor(context,
-                        (ISBNParsedResult) parsedResult, result, photoUri);
+                return new IsbnResultProcessor(context, result, rawResult);//, photoUri);
             case SMS:
             case GEO:
             case TEL:
@@ -40,7 +37,7 @@ public final class ResultProcessorFactory {
             case WIFI:
                 // currently unsupported so we let them fall through
             default:
-                return new TextResultProcessor(context, parsedResult, result, photoUri);
+                return new TextResultProcessor(context, result, rawResult);//, photoUri);
         }
     }
 }

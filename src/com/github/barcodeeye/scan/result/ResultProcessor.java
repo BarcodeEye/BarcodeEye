@@ -10,39 +10,63 @@ import android.net.Uri;
 import com.github.barcodeeye.scan.api.CardPresenter;
 import com.google.zxing.Result;
 import com.google.zxing.client.result.ParsedResult;
+import com.google.zxing.client.result.ParsedResultType;
 
 /**
  * @author javier.romero
  */
-public abstract class ResultProcessor<T extends ParsedResult> {
+public abstract class ResultProcessor {
+    private final ParsedResult mResult;
     private final Context mContext;
-    private final T mParsedResult;
     private final Result mRawResult;
-    private final Uri mPhotoUri;
+    //private final Uri mPhotoUri;
 
-    public ResultProcessor(Context context, T parsedResult,
-            Result result, Uri photoUri) {
+    public ResultProcessor(Context context, ParsedResult result,
+            Result rawResult/*, Uri photoUri*/) {
+        mResult = result;
         mContext = context;
-        mParsedResult = parsedResult;
-        mRawResult = result;
-        mPhotoUri = photoUri;
+        mRawResult = rawResult;
+        //mPhotoUri = photoUri;
     }
 
     public Context getContext() {
         return mContext;
     }
 
-    public T getParsedResult() {
-        return mParsedResult;
+    public ParsedResult getResult() {
+        return mResult;
     }
 
+    /*
     public Result getRawResult() {
         return mRawResult;
     }
+    */
+    
+    /**
+     * Create a possibly styled string for the contents of the current barcode.
+     *
+     * @return The text to be displayed.
+     */
+    public CharSequence getDisplayContents() {
+      String contents = mResult.getDisplayResult();
+      return contents.replace("\r", "");
+    }
 
+    /**
+     * A convenience method to get the parsed type. Should not be overridden.
+     *
+     * @return The parsed type, e.g. URI or ISBN
+     */
+    public final ParsedResultType getType() {
+      return mResult.getType();
+    }
+
+    /*
     public Uri getPhotoUri() {
         return mPhotoUri;
     }
+    */
 
     public abstract List<CardPresenter> getCardResults();
 
