@@ -36,6 +36,8 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.barcodeeye.BaseGlassActivity;
@@ -95,6 +97,7 @@ public final class CaptureActivity extends BaseGlassActivity implements
     private CaptureActivityHandler mHandler;
     private Result mSavedResultToShow;
     private ViewfinderView mViewfinderView;
+    private TextView mStatusView;
     private boolean mHasSurface;
     private IntentSource mSource;
     private String mSourceUrl;
@@ -136,8 +139,6 @@ public final class CaptureActivity extends BaseGlassActivity implements
         mBeepManager = new BeepManager(this);
         mAmbientLightManager = new AmbientLightManager(this);
 
-        mViewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
-
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
     }
 
@@ -150,9 +151,14 @@ public final class CaptureActivity extends BaseGlassActivity implements
         // first launch. That led to bugs where the scanning rectangle was the wrong size and partially
         // off screen.
         mCameraManager = new CameraManager(getApplication());
+        mViewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
         mViewfinderView.setCameraManager(mCameraManager);
 
+        mStatusView = (TextView) findViewById(R.id.status_view);
+
         mHandler = null;
+        
+        resetStatusView();
 
         SurfaceView surfaceView = (SurfaceView) findViewById(R.id.preview_view);
         SurfaceHolder surfaceHolder = surfaceView.getHolder();
@@ -195,6 +201,12 @@ public final class CaptureActivity extends BaseGlassActivity implements
                 mCameraManager.setManualFramingRect(width, height);
               }
             }
+            
+            String customPromptMessage = intent.getStringExtra(Intents.Scan.PROMPT_MESSAGE);
+            if (customPromptMessage != null) {
+              mStatusView.setText(customPromptMessage);
+            }
+
           } else if (dataString != null &&
                      dataString.contains("http://www.google") &&
                      dataString.contains("/m/products/scan")) {
@@ -394,6 +406,7 @@ public final class CaptureActivity extends BaseGlassActivity implements
 
     // Put up our own UI for how to handle the decoded contents.
     private void handleDecodeInternally(Result rawResult, ResultProcessor resultProcessor, Bitmap barcode) {
+      mStatusView.setVisibility(View.GONE);
       startActivity(ResultsActivity.newIntent(this,
               resultProcessor.getCardResults(), rawResult, barcode));
     }
@@ -418,7 +431,7 @@ public final class CaptureActivity extends BaseGlassActivity implements
         if (rawResultString.length() > 32) {
           rawResultString = rawResultString.substring(0, 32) + " ...";
         }
-        //statusView.setText(getString(resultHandler.getDisplayTitle()) + " : " + rawResultString);
+        //mStatusView.setText(getString(resultProcessor.getDisplayTitle()) + " : " + rawResultString);
       }
 
       /*
@@ -536,6 +549,12 @@ public final class CaptureActivity extends BaseGlassActivity implements
         if (mHandler != null) {
             mHandler.sendEmptyMessageDelayed(R.id.restart_preview, delayMS);
         }
+        resetStatusView();
+    }
+    
+    private void resetStatusView() {
+        mStatusView.setText(R.string.msg_default_status);
+        mStatusView.setVisibility(View.VISIBLE);
     }
 
     public void drawViewfinder() {
