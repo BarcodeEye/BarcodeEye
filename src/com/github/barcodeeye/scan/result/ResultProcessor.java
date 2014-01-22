@@ -19,14 +19,12 @@ public abstract class ResultProcessor {
     private final ParsedResult mResult;
     private final Context mContext;
     private final Result mRawResult;
-    //private final Uri mPhotoUri;
 
     public ResultProcessor(Context context, ParsedResult result,
-            Result rawResult/*, Uri photoUri*/) {
+            Result rawResult) {
         mResult = result;
         mContext = context;
         mRawResult = rawResult;
-        //mPhotoUri = photoUri;
     }
 
     public Context getContext() {
@@ -37,12 +35,6 @@ public abstract class ResultProcessor {
         return mResult;
     }
 
-    /*
-    public Result getRawResult() {
-        return mRawResult;
-    }
-    */
-    
     /**
      * Create a possibly styled string for the contents of the current barcode.
      *
@@ -61,12 +53,6 @@ public abstract class ResultProcessor {
     public final ParsedResultType getType() {
       return mResult.getType();
     }
-
-    /*
-    public Uri getPhotoUri() {
-        return mPhotoUri;
-    }
-    */
 
     public abstract List<CardPresenter> getCardResults();
 
