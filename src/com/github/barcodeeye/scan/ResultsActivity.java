@@ -30,12 +30,9 @@ public class ResultsActivity extends Activity {
     private static final String TAG = ResultsActivity.class.getSimpleName();
     
     private static final String EXTRA_CARDS = "EXTRA_CARDS";
-    //private static final String EXTRA_IMAGE = "EXTRA_IMAGE";
 
     private final List<CardPresenter> mCardPresenters = new ArrayList<CardPresenter>();
     private CardScrollView mCardScrollView;
-    // Not actually used?
-    //private Bitmap mImage;
 
     public static Intent newIntent(Context context,
             List<CardPresenter> cardResults, Result rawResult, Bitmap bitmap) {
@@ -79,12 +76,6 @@ public class ResultsActivity extends Activity {
                     cardResults.toArray(new CardPresenter[cardResults.size()]));
         }
         
-        /*
-        ByteArrayOutputStream imageStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, imageStream);
-        intent.putExtra(EXTRA_IMAGE, imageStream.toByteArray());
-        */
-
         return intent;
     }
 
@@ -122,13 +113,6 @@ public class ResultsActivity extends Activity {
         for (int i = 0; i < parcelCardsArray.length; i++) {
             mCardPresenters.add((CardPresenter) parcelCardsArray[i]);
         }
-
-        /*
-        byte[] imageBytes = extras.getByteArray(EXTRA_IMAGE);
-        if (imageBytes != null) {
-            mImage2 = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-        }
-        */
     }
 
     public static class CardScrollViewAdapter extends CardScrollAdapter {
