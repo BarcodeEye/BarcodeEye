@@ -329,7 +329,7 @@ public final class CaptureActivity extends BaseGlassActivity implements
      */
     public void handleDecode(Result rawResult, Bitmap barcode, float scaleFactor) {
         mInactivityTimer.onActivity();
-        ResultProcessor resultProcessor = ResultProcessorFactory.makeResultProcessor(this, rawResult);//, bitmap);//imageUri);
+        ResultProcessor resultProcessor = ResultProcessorFactory.makeResultProcessor(this, rawResult);
                 
         boolean fromLiveScan = barcode != null;
         if (fromLiveScan) {
