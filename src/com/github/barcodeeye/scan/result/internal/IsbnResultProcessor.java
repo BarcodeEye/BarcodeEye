@@ -24,8 +24,8 @@ public class IsbnResultProcessor extends ResultProcessor {
     }
 
     public IsbnResultProcessor(Context context, ParsedResult result,
-            Result rawResult/*, Uri photoUri*/) {
-        super(context, result, rawResult);//, photoUri);
+            Result rawResult) {
+        super(context, result, rawResult);
     }
 
     @Override

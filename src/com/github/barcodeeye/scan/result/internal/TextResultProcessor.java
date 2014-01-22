@@ -19,8 +19,8 @@ public class TextResultProcessor extends ResultProcessor {
     private static final String SEARCH_URL = "https://www.google.com/search?q=%s";
 
     public TextResultProcessor(Context context, ParsedResult result,
-            Result rawResult/*, Uri photoUri*/) {
-        super(context, result, rawResult);//, photoUri);
+            Result rawResult) {
+        super(context, result, rawResult);
     }
 
     @Override

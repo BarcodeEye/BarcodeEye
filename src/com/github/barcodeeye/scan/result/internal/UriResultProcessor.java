@@ -16,8 +16,8 @@ import com.google.zxing.client.result.URIParsedResult;
 public class UriResultProcessor extends ResultProcessor {
 
     public UriResultProcessor(Context context, ParsedResult result,
-            Result rawResult/*, Uri photoUri*/) {
-        super(context, result, rawResult);//, photoUri);
+            Result rawResult) {
+        super(context, result, rawResult);
     }
 
     @Override

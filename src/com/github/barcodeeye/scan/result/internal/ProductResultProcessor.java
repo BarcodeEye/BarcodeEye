@@ -25,8 +25,8 @@ public class ProductResultProcessor extends ResultProcessor {
     }
 
     public ProductResultProcessor(Context context, ParsedResult result,
-            Result rawResult/*, Uri photoUri*/) {
-        super(context, result, rawResult);//, photoUri);
+            Result rawResult) {
+        super(context, result, rawResult);
     }
 
     @Override
