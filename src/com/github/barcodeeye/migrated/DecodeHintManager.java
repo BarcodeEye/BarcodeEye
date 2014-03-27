@@ -114,7 +114,7 @@ public final class DecodeHintManager {
     return map;
   }
 
-  static Map<DecodeHintType,?> parseDecodeHints(Uri inputUri) {
+  public static Map<DecodeHintType,?> parseDecodeHints(Uri inputUri) {
     String query = inputUri.getEncodedQuery();
     if (query == null || query.isEmpty()) {
       return null;
@@ -198,7 +198,7 @@ public final class DecodeHintManager {
     return hints;
   }
 
-  static Map<DecodeHintType, Object> parseDecodeHints(Intent intent) {
+  public static Map<DecodeHintType, Object> parseDecodeHints(Intent intent) {
     Bundle extras = intent.getExtras();
     if (extras == null || extras.isEmpty()) {
       return null;
