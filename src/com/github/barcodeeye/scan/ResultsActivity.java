@@ -72,7 +72,7 @@ public class ResultsActivity extends Activity {
     for (CardPresenter cardPresenter : mCardPresenters) {
         Card card = new Card(this);
         card.setText(cardPresenter.getText());
-        card.setInfo(cardPresenter.getFooter());
+        card.setFootnote(cardPresenter.getFooter());
 
         for (Uri uri : cardPresenter.getImages()) {
             if (uri != null) {
