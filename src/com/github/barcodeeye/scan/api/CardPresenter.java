@@ -93,7 +93,6 @@ public class CardPresenter implements Parcelable {
             }
         }
 
-//        ImitationCard card = new ImitationCard(context);
         return card.toView();
     }
 

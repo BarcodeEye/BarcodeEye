@@ -46,6 +46,10 @@ public class IsbnResultProcessor extends ResultProcessor<ISBNParsedResult> {
             intent.setData(Uri.parse(url));
             cardPresenter.setPendingIntent(createPendingIntent(getContext(), intent));
 
+            if (getPhotoUri() != null) {
+                cardPresenter.addImage(getPhotoUri());
+            }
+
             cardPresenters.add(cardPresenter);
         }
 

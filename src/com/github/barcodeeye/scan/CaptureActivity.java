@@ -304,7 +304,7 @@ public final class CaptureActivity extends BaseGlassActivity implements
                 .makeResultProcessor(this, rawResult, imageUri);
 
         startActivity(ResultsActivity.newIntent(this,
-                processor.getCardResults(), imageUri));
+                processor.getCardResults()));
     }
 
     private void initCamera(SurfaceHolder surfaceHolder) {

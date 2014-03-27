@@ -47,6 +47,10 @@ public class ProductResultProcessor extends ResultProcessor<ProductParsedResult>
             intent.setData(Uri.parse(url));
             cardPresenter.setPendingIntent(createPendingIntent(getContext(), intent));
 
+            if (getPhotoUri() != null) {
+                cardPresenter.addImage(getPhotoUri());
+            }
+
             cardPresenters.add(cardPresenter);
         }
 

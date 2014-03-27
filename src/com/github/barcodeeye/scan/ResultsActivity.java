@@ -8,8 +8,6 @@ import android.app.PendingIntent;
 import android.app.PendingIntent.CanceledException;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
@@ -18,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
-import com.github.barcodeeye.image.ImageManager;
 import com.github.barcodeeye.scan.api.CardPresenter;
 import com.google.android.glass.widget.CardScrollAdapter;
 import com.google.android.glass.widget.CardScrollView;
@@ -31,17 +28,15 @@ public class ResultsActivity extends Activity {
 
     private final List<CardPresenter> mCardPresenters = new ArrayList<CardPresenter>();
     private CardScrollView mCardScrollView;
-    private Bitmap mImage;
 
     public static Intent newIntent(Context context,
-            List<CardPresenter> cardResults, Uri imageUri) {
+            List<CardPresenter> cardResults) {
 
         Intent intent = new Intent(context, ResultsActivity.class);
         if (cardResults != null) {
             intent.putExtra(EXTRA_CARDS,
                     cardResults.toArray(new CardPresenter[cardResults.size()]));
         }
-        intent.putExtra(EXTRA_IMAGE_URI, imageUri);
 
         return intent;
     }
@@ -67,27 +62,9 @@ public class ResultsActivity extends Activity {
             return;
         }
 
-    for (CardPresenter cardPresenter : mCardPresenters) {
-        Card card = new Card(this);
-        card.setText(cardPresenter.getText());
-        card.setFootnote(cardPresenter.getFooter());
-
-        for (Uri uri : cardPresenter.getImages()) {
-            if (uri != null) {
-                Log.w(TAG, "ImageUri: " + uri.toString());
-                // FIXME: Currently unsupported.
-                // see (https://code.google.com/p/google-glass-api/issues/detail?id=288)
-                // card.addImage(uri);
-            } else {
-                Log.w(TAG, "We got a null imageUri!");
-            }
-        }
-
-        mCards.add(card);
-    }
-
         mCardScrollView = new CardScrollView(this);
-        mCardScrollView.setAdapter(new CardScrollViewAdapter(this, mCardPresenters));
+        mCardScrollView.setAdapter(new CardScrollViewAdapter(this,
+                mCardPresenters));
         mCardScrollView.activate();
         mCardScrollView.setOnItemClickListener(mOnItemClickListener);
 
@@ -98,11 +75,6 @@ public class ResultsActivity extends Activity {
         Parcelable[] parcelCardsArray = extras.getParcelableArray(EXTRA_CARDS);
         for (int i = 0; i < parcelCardsArray.length; i++) {
             mCardPresenters.add((CardPresenter) parcelCardsArray[i]);
-        }
-
-        Uri imageUri = (Uri) extras.getParcelable(EXTRA_IMAGE_URI);
-        if (imageUri != null) {
-            mImage = new ImageManager(this).getImage(imageUri);
         }
     }
 

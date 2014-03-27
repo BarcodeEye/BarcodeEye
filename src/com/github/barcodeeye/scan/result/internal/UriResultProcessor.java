@@ -29,6 +29,11 @@ public class UriResultProcessor extends ResultProcessor<URIParsedResult> {
                 .setText("Open in Browser")
                 .setFooter(parsedResult.getDisplayResult());
 
+
+        if (getPhotoUri() != null) {
+            cardPresenter.addImage(getPhotoUri());
+        }
+
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(parsedResult.getURI()));
         cardPresenter.setPendingIntent(createPendingIntent(getContext(), intent));
