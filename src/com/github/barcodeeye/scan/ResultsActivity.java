@@ -67,6 +67,25 @@ public class ResultsActivity extends Activity {
             return;
         }
 
+    for (CardPresenter cardPresenter : mCardPresenters) {
+        Card card = new Card(this);
+        card.setText(cardPresenter.getText());
+        card.setFootnote(cardPresenter.getFooter());
+
+        for (Uri uri : cardPresenter.getImages()) {
+            if (uri != null) {
+                Log.w(TAG, "ImageUri: " + uri.toString());
+                // FIXME: Currently unsupported.
+                // see (https://code.google.com/p/google-glass-api/issues/detail?id=288)
+                // card.addImage(uri);
+            } else {
+                Log.w(TAG, "We got a null imageUri!");
+            }
+        }
+
+        mCards.add(card);
+    }
+
         mCardScrollView = new CardScrollView(this);
         mCardScrollView.setAdapter(new CardScrollViewAdapter(this, mCardPresenters));
         mCardScrollView.activate();
