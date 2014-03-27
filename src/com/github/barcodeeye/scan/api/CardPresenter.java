@@ -83,7 +83,7 @@ public class CardPresenter implements Parcelable {
     public View getCardView(Context context) {
         Card card = new Card(context);
         card.setText(mText);
-        card.setInfo(mFooter);
+        card.setFootnote(mFooter);
         for (Uri uri : mImages) {
             if (uri != null) {
                 Log.w(TAG, "ImageUri: " + uri.toString());
