@@ -1,5 +1,7 @@
 package com.github.barcodeeye.scan.api;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +10,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 
@@ -87,13 +90,18 @@ public class CardPresenter implements Parcelable {
         for (Uri uri : mImages) {
             if (uri != null) {
                 Log.w(TAG, "ImageUri: " + uri.toString());
-                 card.addImage(uri);
+                try {
+                    card.addImage(MediaStore.Images.Media.getBitmap(
+                            context.getContentResolver(), uri));
+                } catch (IOException e) {
+                    Log.e(TAG, "Failed to load: " + e);
+                }
             } else {
                 Log.w(TAG, "We got a null imageUri!");
             }
         }
 
-        return card.toView();
+        return card.getView();
     }
 
     /* *********************************************************************

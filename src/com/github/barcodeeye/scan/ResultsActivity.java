@@ -90,16 +90,6 @@ public class ResultsActivity extends Activity {
         }
 
         @Override
-        public int findIdPosition(Object id) {
-            return -1;
-        }
-
-        @Override
-        public int findItemPosition(Object item) {
-            return mCardPresenters.indexOf(item);
-        }
-
-        @Override
         public int getCount() {
             return mCardPresenters.size();
         }
@@ -113,6 +103,11 @@ public class ResultsActivity extends Activity {
         public View getView(int position, View convertView, ViewGroup parent) {
             CardPresenter cardPresenter = mCardPresenters.get(position);
             return cardPresenter.getCardView(mContext);
+        }
+
+        @Override
+        public int getPosition(Object item) {
+            return mCardPresenters.indexOf(item);
         }
     }
 
